@@ -16,4 +16,6 @@ params = {
 }
 
 # https://github.com/archiloque/rest-client
-RestClient.post "https://github.com/repos/socialcast/socialcast/pulls", :body => params.to_json, :content_type => :json, :accept => :json
+config = {} # load .gitconfig github settings
+request = Request.new "https://github.com/repos/socialcast/socialcast/pulls", :user => config[:user], :password => config[:token]
+request.post :body => params.to_json, :content_type => :json, :accept => :json
