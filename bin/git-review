@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+# http://develop.github.com/p/pulls.html
+# curl -d "pull[base]=master" -d "pull[head]=smparkes:synchrony" \
+#  -d "pull[title]=..." -d "pull[body]=..." \
+#  https://github.com/api/v2/json/pulls/technoweenie/faraday
+
+
+# http://developer.github.com/v3/pulls/
+require 'rest_client'
+params = {
+  :base => 'master', 
+  :head => 'test', 
+  :title => 'test', 
+  :body => 'testing'
+}
+
+# https://github.com/archiloque/rest-client
+RestClient.post "https://github.com/repos/socialcast/socialcast/pulls", :body => params.to_json, :content_type => :json, :accept => :json
