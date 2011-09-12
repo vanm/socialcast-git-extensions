@@ -56,6 +56,7 @@ module Socialcast
     end.map do |arg|
       arguments.delete(arg).split('=').last
     end.compact.map do |ticket_id|
+      puts "Getting JIRA issue: #{ticket_id}"
       jira_server.getIssue ticket_id
     end
   end
