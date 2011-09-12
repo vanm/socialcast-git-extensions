@@ -48,11 +48,15 @@ module Socialcast
     tickets
   end
   def tickets_from_arguments_or_branch(ticket_ids, branch)
-    ticket_ids.any? ? tickets_from_arguments(ticket_ids) : tickets_from_branch(branch)
+    ticket_ids.any? ? tickets_from_arguments!(ticket_ids) : tickets_from_branch(branch)
   end
-  def tickets_from_arguments(ticket_ids)
-    ticket_ids.collect do |key|
-      jira_server.getIssue key
+  def tickets_from_arguments!(arguments)
+    arguments.select do |arg|
+      arg =~ /^JIRA=/
+    end.map do |arg|
+      arguments.delete(arg).split('=').last
+    end.compact.map do |ticket_id|
+      jira_server.getIssue ticket_id
     end
   end
   def tickets_from_branch(branch)
